@@ -1,40 +1,39 @@
+import { BACKGROUND_COLOR } from "./consts.js";
 import { getBodyPart, getHead } from "./scripts/body.js";
 import Snake from "./scripts/snake.js";
 
 const canvas = document.getElementById("main-field");
 const ctx = canvas.getContext("2d");
 
-ctx.fillStyle = "rgb(143, 188, 143)";
-ctx.fillRect(20, 20, 256, 256);
+const drawBackground = () => {
+  ctx.fillStyle = `rgb(${BACKGROUND_COLOR.r}, ${BACKGROUND_COLOR.g}, ${BACKGROUND_COLOR.b}, 143)`;
+  ctx.fillRect(20, 20, 256, 256);
+};
 
-const snake = new Snake({ r: 255, g: 20, b: 147, a: 255 });
-console.log(snake);
-const head = getHead(ctx, snake.parts[0].color, {
-  r: 143,
-  g: 188,
-  b: 143,
-  a: 255
-});
-ctx.putImageData(
-  head,
-  20 + snake.parts[0].x * 16,
-  20 + 20 + snake.parts[0].y * 16
-);
+const snake = new Snake(ctx, { r: 255, g: 20, b: 147, a: 255 });
+
+drawBackground();
+snake.drawSnake();
 
 setInterval(() => {
-  console.log("step");
-  ctx.fillStyle = "rgb(143, 188, 143)";
-  ctx.fillRect(20, 20, 256, 256);
-  snake.moveRight();
-  const head = getHead(ctx, snake.parts[0].color, {
-    r: 143,
-    g: 188,
-    b: 143,
-    a: 255
-  });
-  ctx.putImageData(
-    head,
-    20 + (snake.parts[0].x % 16) * 16,
-    20 + (snake.parts[0].y % 16) * 16
-  );
+  drawBackground();
+  snake.move();
+  snake.drawSnake();
 }, 1000);
+
+document.addEventListener("keydown", (e) => {
+  switch (e.key) {
+    case "ArrowUp":
+      snake.setMove("up");
+      break;
+    case "ArrowDown":
+      snake.setMove("down");
+      break;
+    case "ArrowLeft":
+      snake.setMove("left");
+      break;
+    case "ArrowRight":
+      snake.setMove("right");
+      break;
+  }
+});
