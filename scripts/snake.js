@@ -1,18 +1,11 @@
 import { SIZE, BACKGROUND_COLOR } from "../consts.js";
 import { getBodyPart, getHead } from "./body.js";
+import { getColor } from "../utils.js";
 
 export default class Snake {
   constructor(context, color, x = 0, y = 0) {
     this.context = context;
-    this.parts = [
-      { x, y, color },
-      { x: 1, y: 0, color },
-      { x: 2, y: 0, color },
-      { x: 3, y: 0, color },
-      { x: 4, y: 0, color },
-      { x: 5, y: 0, color },
-      { x: 6, y: 0, color }
-    ];
+    this.parts = [{ x, y, color }];
     this.headSprite = getHead(
       this.context,
       this.parts[0].color,
@@ -25,7 +18,6 @@ export default class Snake {
   }
 
   setMove = (direction) => {
-    console.log(direction);
     switch (direction) {
       case "down":
         this.move = this.moveDown;
@@ -95,6 +87,11 @@ export default class Snake {
     this.parts = newSnakePosition;
   };
 
+  eat = (x, y, color) => {
+    this.parts.push({ x, y, color });
+    this.bodySprites.push(getBodyPart(this.context, color, BACKGROUND_COLOR));
+  };
+
   drawSnake = () => {
     this.context.putImageData(
       this.headSprite,
@@ -108,6 +105,21 @@ export default class Snake {
         20 + this.parts[index + 1].y * 16
       )
     );
+  };
+
+  renew = () => {
+    this.parts = [
+      { x: this.parts[0].x, y: this.parts[0].y, color: getColor() }
+    ];
+    this.headSprite = getHead(
+      this.context,
+      this.parts[0].color,
+      BACKGROUND_COLOR
+    );
+    this.bodySprites = this.parts
+      .slice(1)
+      .map((part) => getBodyPart(this.context, part.color, BACKGROUND_COLOR));
+    this.move = this.moveDown;
   };
 
   isSnakeBody = (x, y) =>

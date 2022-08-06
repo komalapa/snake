@@ -1,3 +1,5 @@
+import { drawSprite } from "../utils.js";
+
 const headMap = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
@@ -35,31 +37,6 @@ const bodyMap = [
   [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
-
-const setPixel = (imageData, x, y, r, g, b, a) => {
-  const index = (x + y * imageData.width) * 4;
-  imageData.data[index + 0] = r;
-  imageData.data[index + 1] = g;
-  imageData.data[index + 2] = b;
-  imageData.data[index + 3] = a;
-};
-
-const drawSprite = (imageData, map, colors) => {
-  for (let i = 0; i < map.length; i++) {
-    const line = map[i];
-    for (let j = 0; j < line.length; j++) {
-      setPixel(
-        imageData,
-        j,
-        i,
-        colors[line[j]].r,
-        colors[line[j]].g,
-        colors[line[j]].b,
-        colors[line[j]].a
-      );
-    }
-  }
-};
 
 const getBodyPart = (ctx, color, backgroundColor) => {
   const bodyPart = ctx.createImageData(16, 16);
