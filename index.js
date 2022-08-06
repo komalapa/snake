@@ -18,8 +18,9 @@ snake.drawSnake();
 setInterval(() => {
   drawBackground();
   snake.move();
+  if (snake.isSelfEaten()) alert("Do not eat yourself!");
   snake.drawSnake();
-}, 1000);
+}, 500);
 
 document.addEventListener("keydown", (e) => {
   switch (e.key) {

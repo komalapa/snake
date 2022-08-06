@@ -1,15 +1,26 @@
 import { SIZE, BACKGROUND_COLOR } from "../consts.js";
-import { getHead } from "./body.js";
+import { getBodyPart, getHead } from "./body.js";
 
 export default class Snake {
   constructor(context, color, x = 0, y = 0) {
     this.context = context;
-    this.parts = [{ x, y, color }];
+    this.parts = [
+      { x, y, color },
+      { x: 1, y: 0, color },
+      { x: 2, y: 0, color },
+      { x: 3, y: 0, color },
+      { x: 4, y: 0, color },
+      { x: 5, y: 0, color },
+      { x: 6, y: 0, color }
+    ];
     this.headSprite = getHead(
       this.context,
       this.parts[0].color,
       BACKGROUND_COLOR
     );
+    this.bodySprites = this.parts
+      .slice(1)
+      .map((part) => getBodyPart(this.context, part.color, BACKGROUND_COLOR));
     this.move = this.moveDown;
   }
 
@@ -34,7 +45,7 @@ export default class Snake {
   updateTail = (newSnakePosition) => {
     for (let i = 1; i < this.parts.length; i++) {
       newSnakePosition.push({
-        ...this.parts(i - 1),
+        ...this.parts[i - 1],
         color: this.parts[i].color
       });
     }
@@ -90,5 +101,20 @@ export default class Snake {
       20 + this.parts[0].x * 16,
       20 + this.parts[0].y * 16
     );
+    this.bodySprites.forEach((sprite, index) =>
+      this.context.putImageData(
+        sprite,
+        20 + this.parts[index + 1].x * 16,
+        20 + this.parts[index + 1].y * 16
+      )
+    );
   };
+
+  isSnakeBody = (x, y) =>
+    this.parts.some((part) => part.x === x && part.y === y);
+
+  isSelfEaten = () =>
+    this.parts
+      .slice(1)
+      .some((part) => part.x === this.parts[0].x && part.y === this.parts[0].y);
 }
