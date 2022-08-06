@@ -1,2 +1,68 @@
 .main-canvas {
+  box-shadow: inset 0px 0px 3px 2px lightgray;
+  max-width: 256px;
+  max-height: 256px;
+  border-radius: 5px;
+}
+
+.device {
+  padding: 20px;
+  background-color: lightgrey;
+  border-radius: 5px;
+  max-width: max-content;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.device__button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: relative;
+  margin: 0 20px;
+  border: rgba(0, 0, 0, 0.5);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.device__button:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
+}
+
+.device__button:active {
+  box-shadow: inset rgba(0, 0, 0, 0.35) 0px 5px 10px;
+}
+
+.device__button:after {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 15px solid transparent;
+  box-sizing: border-box;
+  position: absolute;
+}
+
+#button-up::after {
+  border-bottom: 15px solid darkgray;
+  top: -5px;
+  left: 5px;
+}
+
+#button-down::after {
+  border-top: 15px solid darkgray;
+  top: 15px;
+  left: 5px;
+}
+
+#button-left::after {
+  border-right: 15px solid darkgray;
+  left: -5px;
+  top: 5px;
+}
+
+#button-right::after {
+  border-left: 15px solid darkgray;
+  left: 15px;
+  top: 5px;
 }

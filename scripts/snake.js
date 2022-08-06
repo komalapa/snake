@@ -95,14 +95,14 @@ export default class Snake {
   drawSnake = () => {
     this.context.putImageData(
       this.headSprite,
-      20 + this.parts[0].x * 16,
-      20 + this.parts[0].y * 16
+      this.parts[0].x * 16,
+      this.parts[0].y * 16
     );
     this.bodySprites.forEach((sprite, index) =>
       this.context.putImageData(
         sprite,
-        20 + this.parts[index + 1].x * 16,
-        20 + this.parts[index + 1].y * 16
+        this.parts[index + 1].x * 16,
+        this.parts[index + 1].y * 16
       )
     );
   };

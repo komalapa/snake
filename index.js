@@ -10,7 +10,7 @@ let foodX, foodY, foodColor;
 
 const drawBackground = () => {
   ctx.fillStyle = `rgb(${BACKGROUND_COLOR.r}, ${BACKGROUND_COLOR.g}, ${BACKGROUND_COLOR.b}, 143)`;
-  ctx.fillRect(20, 20, 256, 256);
+  ctx.fillRect(0, 0, 256, 256);
 };
 
 const setFoodParams = (snake) => {
@@ -24,8 +24,8 @@ const setFoodParams = (snake) => {
 const drawFood = () => {
   ctx.putImageData(
     getFoodSprite(ctx, BACKGROUND_COLOR, foodColor),
-    20 + foodX * 16,
-    20 + foodY * 16
+    foodX * 16,
+    foodY * 16
   );
 };
 
@@ -77,3 +77,15 @@ document.addEventListener("keydown", (e) => {
       break;
   }
 });
+
+const setListenerToButton = (direction) =>
+  document
+    .querySelector(`#button-${direction}`)
+    .addEventListener("click", () => {
+      if (!gameInterval) startGame();
+      snake.setMove(direction);
+    });
+setListenerToButton("up");
+setListenerToButton("down");
+setListenerToButton("left");
+setListenerToButton("right");

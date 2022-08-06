@@ -8,12 +8,18 @@
     <title>Глистик</title>
   </head>
   <body>
-    <canvas
-      id="main-field"
-      class="main-canvas"
-      width="640"
-      height="480"
-    ></canvas>
+    <div class="device">
+      <canvas id="main-field" class="main-canvas" width="256" height="256"
+        >Your browser doesn't support canvas</canvas
+      >
+      <hr />
+      <button class="device__button" id="button-up"></button>
+      <div>
+        <button class="device__button" id="button-left"></button>
+        <button class="device__button" id="button-right"></button>
+      </div>
+      <button class="device__button" id="button-down"></button>
+    </div>
     <script src="index.js" type="module"></script>
   </body>
 </html>
