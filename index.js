@@ -60,6 +60,7 @@ const startGame = () =>
     snake.drawSnake();
   }, 200));
 
+// keyboard
 document.addEventListener("keydown", (e) => {
   if (!gameInterval) startGame();
   switch (e.key) {
@@ -77,7 +78,7 @@ document.addEventListener("keydown", (e) => {
       break;
   }
 });
-
+// buttons
 const setListenerToButton = (direction) =>
   document
     .querySelector(`#button-${direction}`)
@@ -89,3 +90,38 @@ setListenerToButton("up");
 setListenerToButton("down");
 setListenerToButton("left");
 setListenerToButton("right");
+
+document.addEventListener("touchmove", (event) => {
+  console.log(event);
+});
+
+//swipe
+let startX, startY, moveX, moveY;
+//here clientX, and clientY means X and Y coordinates
+const setTouchStart = (e) => {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+};
+
+const getTouchMove = (e) => {
+  return [e.touches[0].clientX, e.touches[0].clientY];
+};
+
+const applySwipe = (e) => {
+  const [moveX, moveY] = getTouchMove(e);
+  if (startX + 100 < moveX) {
+    snake.setMove("right");
+  } else if (startX - 100 > moveX) {
+    snake.setMove("left");
+  } else if (startY + 100 < moveY) {
+    snake.setMove("down");
+  } else if (startY - 100 > moveY) {
+    snake.setMove("up");
+  }
+  if (!gameInterval) startGame();
+};
+
+document.addEventListener("touchstart", (e) => setTouchStart(e));
+document.addEventListener("touchmove", (e) => {
+  applySwipe(e);
+});
